@@ -6,6 +6,7 @@ import 'package:mime/mime.dart';
 import 'dart:convert';
 import 'package:http_parser/http_parser.dart';
 import 'package:toast/toast.dart';
+import 'package:geolocator/geolocator.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,7 +31,7 @@ class ImageInput extends StatefulWidget {
 class _ImageInput extends State<ImageInput> {
   // To store the file provided by the image_picker
   File _imageFile;
-
+  Position _position; 
   // To track the file uploading state
   bool _isUploading = false;
 
@@ -70,7 +71,9 @@ class _ImageInput extends State<ImageInput> {
     // Which creates some problem at the server side to manage
     // or verify the file extension
     imageUploadRequest.fields['ext'] = mimeTypeData[1];
-
+    imageUploadRequest.fields['latitude'] = _position.latitude.toString();
+    imageUploadRequest.fields['longitude'] = _position.longitude.toString();
+    imageUploadRequest.fields['dateTime'] = _position.timestamp.toLocal().toString();
     imageUploadRequest.files.add(file);
 
     try {
@@ -134,14 +137,20 @@ class _ImageInput extends State<ImageInput> {
                 FlatButton(
                   textColor: flatButtonColor,
                   child: Text('Use Camera'),
-                  onPressed: () {
+                  onPressed: () async{
+                    _position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
+                    print ("yes");
+                    print(_position.timestamp.toLocal().toString());
                     _getImage(context, ImageSource.camera);
                   },
                 ),
                 FlatButton(
                   textColor: flatButtonColor,
                   child: Text('Use Gallery'),
-                  onPressed: () {
+                  onPressed: () async{
+                    _position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
+                    print ("yes");
+                    print(_position.timestamp.toLocal().toString());
                     _getImage(context, ImageSource.gallery);
                   },
                 ),
