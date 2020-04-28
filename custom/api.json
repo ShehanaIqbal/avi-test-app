@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "alert-snowfall-275314",
+  "private_key_id": "96e7b19bfe8558573189771e6ff2cba888439fdc",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCOeWuFDq4xdHKN\nwxbyX/ZxlVZ0tgbXJurMwQf4AkULdjync/BSk5XbyXOCS8u/2sxF34XEAp0xUUZf\nSEHqdAfMO9S/vQJdhuEuV3MRXa9V9O++Zhsv0b6A5dAnDLAjGsQYblDI6p0x1Bwu\n2v1P5ps4vPRLTpBaQ2yv6crxDKlqqcezRA+O9/M0ReAWvHs6hQE04XYPS/bbmuzB\nW803xyJFSQLMHZwWLhDkYKPr8glOR5dwZS1vDTkfU+ZXqU1FOK+RP0+tMzDSNOxe\nEZVQJCHVtUcwViQ0SCGheVkqtSMS6yyQ7twiNJFu0UsDGyzkRNt017+Q9IlqnU+j\nXPQ9X4RrAgMBAAECggEAMvLgrDhPuoe131QAhLQkYQHSZPIjCBV2qbntq5bEMhEa\nJ5eiPSVh1bL4h4OrXPRVUDdaknmM1PIHhFNGnxzXHQXYUqi4i9GL/RJwp6kk5kws\n352L41HSGi4UfaJf6m3L6iCo6vBbPlJnsanGJCiHIYcQpU12+ZBa8Z1dYU3x155O\nk8mB6gno9m3geiQniR0B8LMzoBEtlGV2V7Hh5mzz1JqL9Nc27Eo+5u0e4gymG/aa\naJ9dAtVMX0W081EB+plsg8rQ6cQGxw3eD7VqlknqeD5RtZSmOnxPhw3NSVCcfxo0\ndGdOJu6uqbBVirPqSYH8GI0K67Cqykj1mMPpKogsQQKBgQDEK2icYT/auTgYUPIs\n0nDrAF9ctAGttuf8JYsJUl/Tu7Eo2VN1S4rvC9MaAFV4K3jwXC0pfLB4gwxdLOie\nH1uJhSUFsCPAX/c61nmJeEjw+jDEetB3/ArWpwlB4+Q+CSUdTyFplwKdflCvYoUP\nLm6AAg3kqCjOj50k8q3E+riyWQKBgQC57ZMeX+GSVons6W/uDHKExk0CCEOJ954n\n0xXTwONqTzyGobQh8m3g8sTKjVOCffGrPQJXjVFbaQEZea90bZ10Bt3lnkdnliZk\nhknw4zYFckBfAzog+mKsKNNnBt8po9nbigfLQr4ERtoDXbgvpxwTEHc8jmYHMwuz\n//izGb1sYwKBgEKoMWK51NXAjCQPFUtPspjXxo+chtl9RjSymRzwxakPpPIpbqdz\npOD3VqMGLASqWOzrlVj8ioZYmVHr2ZspMpR3Do5xPKS4tyxiBmhE3BwuF3Yb+Uxb\n817e4VFnW34M43SjF8pmSrgzXL1Lr8Tp1RhgGlJxJXSS7iXI5G0DeND5AoGAI5CG\nK7E7fLqA94hPmMFYxn0IDfN2t9Vds1B1RGQJHDS75yTXSAcPbZAChJwz9SoSKCcr\nY4PspAeZ5j2YijTNgXwuxdVY4z+daG0nh6RumOwZ1BLR86zxYu0MQxDVbymgapYk\nl4TUxAypdyteJ/9XJ25m4HZ8nbPt8ShtchTiXvECgYBnGLvZdUeW0B5pSedTWnXx\nJ3zBu3kAshesa5M4p89QQd2zmsH5fI050JDpCblydUDu7d/7VR5s2cZIlS7NOecf\nsocLQPspEIILijgdrTYjetinzkqMYkkel3oAldLUtxhX/DMl8GEyItnBR7R8nL02\nTWU0w+KUVRnAtQcUnlwdig==\n-----END PRIVATE KEY-----\n",
+  "client_email": "avi-system-account@alert-snowfall-275314.iam.gserviceaccount.com",
+  "client_id": "111492510127673168121",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/avi-system-account%40alert-snowfall-275314.iam.gserviceaccount.com"
+}
