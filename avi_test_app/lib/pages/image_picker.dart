@@ -22,11 +22,10 @@ class _ImageInput extends State<ImageInput> {
   // To track the file uploading state
   bool _isUploading = false;
 
-  String baseUrl = 'http://192.168.43.48/flutterdemoapi/api.php';
+  String baseUrl = 'http://<IP_ADDRESS_HERE>/flutterdemoapi/api.php';
 
   void _getImage(BuildContext context, ImageSource source) async {
     File image = await ImagePicker.pickImage(source: source);
-
     setState(() {
       _imageFile = image;
     });
@@ -35,7 +34,7 @@ class _ImageInput extends State<ImageInput> {
     Navigator.pop(context);
   }
 
-  Future<Map<String, dynamic>> _uploadImage(File image) async {
+  Future<Map<String, dynamic>> _uploadImage(File image, String method) async {
     setState(() {
       _isUploading = true;
     });
@@ -51,7 +50,7 @@ class _ImageInput extends State<ImageInput> {
     // Attach the file in the request
     final file = await http.MultipartFile.fromPath('image', image.path,
         contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
-
+    
     // Explicitly pass the extension of the image with request body
     // Since image_picker has some bugs due which it mixes up
     // image extension with file name like this filenamejpge
@@ -61,6 +60,7 @@ class _ImageInput extends State<ImageInput> {
     imageUploadRequest.fields['latitude'] = _position.latitude.toString();
     imageUploadRequest.fields['longitude'] = _position.longitude.toString();
     imageUploadRequest.fields['dateTime'] = _position.timestamp.toLocal().toString();
+    imageUploadRequest.fields['method'] = method;
     imageUploadRequest.files.add(file);
 
     try {
@@ -83,15 +83,15 @@ class _ImageInput extends State<ImageInput> {
     }
   }
 
-  void _startUploading() async {
-    final Map<String, dynamic> response = await _uploadImage(_imageFile);
+  void _startUploading(String method) async {
+    final Map<String, dynamic> response = await _uploadImage(_imageFile,method);
     print(response);
     // Check if any error occured
     if (response == null || response.containsKey("error")) {
       Toast.show("Image Upload Failed!!!", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     } else {
-      Toast.show("Image Uploaded Successfully!!!", context,
+      Toast.show(response['response'], context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
   }
@@ -104,14 +104,13 @@ class _ImageInput extends State<ImageInput> {
   }
 
   void _openImagePickerModal(BuildContext context) {
-    final flatButtonColor = Theme.of(context).primaryColor;
     print('Image Picker Modal Called');
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: 150.0,
-            padding: EdgeInsets.all(10.0),
+            height: 300.0,
+            padding: EdgeInsets.only(top:20.0,bottom: 20,left:5.0,right:5.0 ),
             child: Column(
               children: <Widget>[
                 Text(
@@ -119,28 +118,56 @@ class _ImageInput extends State<ImageInput> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 10.0,
+                  height: 30.0,
                 ),
-                FlatButton(
-                  textColor: flatButtonColor,
-                  child: Text('Use Camera'),
-                  onPressed: () async{
-                    _position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
-                    print ("yes");
-                    print(_position.timestamp.toLocal().toString());
+
+                Material(
+                elevation: 5.0,
+                borderRadius: BorderRadius.circular(30.0),
+                color: Colors.blue,
+                child: MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                 onPressed: () async{
+                    _position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+                    // print ("yes");
+                    // print(_position.timestamp.toLocal().toString());
                     _getImage(context, ImageSource.camera);
                   },
+                child: Text("Use camera",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color:Colors.white,
+                        fontSize: 15.0,
+                      )
                 ),
-                FlatButton(
-                  textColor: flatButtonColor,
-                  child: Text('Use Gallery'),
-                  onPressed: () async{
-                    _position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
-                    print ("yes");
-                    print(_position.timestamp.toLocal().toString());
+                )
+              ),
+              Padding(padding:EdgeInsets.symmetric(vertical: 20.0,horizontal: 5.0) ,),
+              Material(
+                elevation: 5.0,
+                borderRadius: BorderRadius.circular(30.0),
+                color: Colors.blue,
+                child: MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                 onPressed: () async{
+                    _position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+                    // print ("yes");
+                    // print(_position.latitude.toString());
+                    // print(_position.longitude.toString());
+                    // print(_position.timestamp.toLocal().toString());
                     _getImage(context, ImageSource.gallery);
                   },
+                child: Text("Use Gallery",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color:Colors.white,
+                        fontSize: 15.0,
+                      )
                 ),
+                )
+              )
               ],
             ),
           );
@@ -159,15 +186,53 @@ class _ImageInput extends State<ImageInput> {
       // If image is picked by the user then show a upload btn
 
       btnWidget = Container(
-        margin: EdgeInsets.only(top: 10.0),
-        child: RaisedButton(
-          child: Text('Upload'),
-          onPressed: () {
-            _startUploading();
-          },
+        margin: EdgeInsets.all(10.0),
+        child:Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          Padding(padding:EdgeInsets.symmetric(vertical: 20.0,horizontal: 5.0) ,),
+        Material(
+          elevation: 5.0,
+          borderRadius: BorderRadius.circular(30.0),
           color: Colors.blue,
-          textColor: Colors.white,
+          child: MaterialButton(
+            minWidth: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            onPressed: () {
+            _startUploading("blacklist");
+          },
+          child: Text("Blacklist This Vehicle",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color:Colors.white,
+                  fontSize: 15.0,
+                )
+          ),
+          )
         ),
+        Padding(padding:EdgeInsets.symmetric(vertical: 20.0,horizontal: 5.0) ,),
+        Material(
+          elevation: 5.0,
+          borderRadius: BorderRadius.circular(30.0),
+          color: Colors.blue,
+          child: MaterialButton(
+            minWidth: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            onPressed: () {
+            _startUploading("check");
+          },
+          child: Text("Check This Vehicle",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color:Colors.white,
+                  fontSize: 15.0,
+                )
+          ),
+          )
+        )
+          ]
+        )
       );
     }
 
@@ -178,7 +243,7 @@ class _ImageInput extends State<ImageInput> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Upload Demo'),
+        title: Text('Welcome to A V I '),
       ),
       drawer: DrawerUI(),
       body: Column(
@@ -206,7 +271,7 @@ class _ImageInput extends State<ImageInput> {
               : Image.file(
                   _imageFile,
                   fit: BoxFit.cover,
-                  height: 300.0,
+                  height: 500.0,
                   alignment: Alignment.topCenter,
                   width: MediaQuery.of(context).size.width,
                 ),

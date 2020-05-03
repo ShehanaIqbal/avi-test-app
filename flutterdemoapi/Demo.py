@@ -1,13 +1,13 @@
 from google.cloud import vision
 import os,io
-os.environ['GOOGLE_APPLICATION_CREDENTIALS']=r"api.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']=r"api1.json"
 
 
 def extract_text():
     r_texts=[]
     client = vision.ImageAnnotatorClient()
     
-    with io.open(r"C:\Users\user\Downloads\Simple-Python-Web-Server-master\custom\cropped.jpg", 'rb') as image_file:
+    with io.open(r"C:\xampp1\htdocs\flutterdemoapi\cropped.jpg", 'rb') as image_file:
          content = image_file.read()
      
     image = vision.types.Image(content=content)
@@ -29,4 +29,7 @@ def extract_text():
              '{}\nFor more info on error messages, check: '
              'https://cloud.google.com/apis/design/errors'.format(
                  response.error.message))
-    print (r_texts)
+    print(str(r_texts[0][:-1]))
+    return(str(r_texts[0]))
+
+extract_text()
