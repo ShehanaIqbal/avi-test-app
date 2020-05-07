@@ -32,7 +32,7 @@ if(isset($_FILES["image"]["name"])) {
                         }else if($result==='updated'){
                             echo json_encode(['response' => "Vehicle Blacklisted Successfully"]);
                         }else{
-                            echo json_encode(['response' => "Please Try Again"]);
+                            echo json_encode(['error' => "Please Try Again"]);
                         }
                     }else if($method==="check"){
                         $result=$utility->Check_Vehicle($out,$latitude,$longitude,5,$dateTime,4);
@@ -43,7 +43,7 @@ if(isset($_FILES["image"]["name"])) {
                         }
                     }
                 }else{
-                    echo json_encode(['response' => "Please Try Again"]);
+                    echo json_encode(['error' => "Please Try Again"]);
                 }
             }else{
                 echo json_encode(['response' => "System did not detect a number plate "]);

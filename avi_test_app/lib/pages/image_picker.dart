@@ -22,7 +22,7 @@ class _ImageInput extends State<ImageInput> {
   // To track the file uploading state
   bool _isUploading = false;
 
-  String baseUrl = 'http://<IP_ADDRESS_HERE>/flutterdemoapi/api.php';
+  String baseUrl = 'http://192.168.8.108/flutterdemoapi/api.php';
 
   void _getImage(BuildContext context, ImageSource source) async {
     File image = await ImagePicker.pickImage(source: source);
@@ -87,8 +87,11 @@ class _ImageInput extends State<ImageInput> {
     final Map<String, dynamic> response = await _uploadImage(_imageFile,method);
     print(response);
     // Check if any error occured
-    if (response == null || response.containsKey("error")) {
+    if (response == null) {
       Toast.show("Image Upload Failed!!!", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    }else if( response.containsKey("error")){
+          Toast.show(response['error'], context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     } else {
       Toast.show(response['response'], context,

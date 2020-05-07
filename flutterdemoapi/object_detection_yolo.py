@@ -4,7 +4,7 @@ import sys
 import time
 import numpy as np
 import os.path
-# import Demo
+import Demo
 # Initialize the parameters
 confThreshold = 0.5  #Confidence threshold
 nmsThreshold = 0.4  #Non-maximum suppression threshold
@@ -133,8 +133,7 @@ if isDone:
         crop_img = img[top:top+height, left:left+width]
         cv.imwrite('cropped.jpg',crop_img)
         cv.waitKey(3000)
-        # result=Demo.extract_text()
-        result = "platenm4"
+        result=Demo.extract_text()
         with open(args.output, 'w') as output_file:
             output_file.write("%s\n" % result)
     except:

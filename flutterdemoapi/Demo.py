@@ -29,7 +29,6 @@ def extract_text():
              '{}\nFor more info on error messages, check: '
              'https://cloud.google.com/apis/design/errors'.format(
                  response.error.message))
-    print(str(r_texts[0][:-1]))
     return(str(r_texts[0]))
 
 extract_text()
