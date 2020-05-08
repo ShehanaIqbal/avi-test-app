@@ -94,6 +94,11 @@ class _ImageInput extends State<ImageInput> {
           Toast.show(response['error'], context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     } else {
+      print(response['vehicleNo']);
+      print(response['dateTime']);
+      print(response['latitude']);
+      print(response['longitude']);
+      print(response['response']);
       Toast.show(response['response'], context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     }
