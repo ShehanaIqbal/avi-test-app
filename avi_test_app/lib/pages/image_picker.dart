@@ -1,3 +1,5 @@
+import 'package:avi_test_app/database/database.dart';
+import 'package:avi_test_app/database/history.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -8,6 +10,13 @@ import 'package:http_parser/http_parser.dart';
 import 'package:toast/toast.dart';
 import 'package:geolocator/geolocator.dart';
 import '../widgets/drawer.dart';
+
+String vehiclenumber = 'detection failed';
+String latitude;
+String longitude;
+String datetime;
+String isBlacklisted;
+
 class ImageInput extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -22,7 +31,7 @@ class _ImageInput extends State<ImageInput> {
   // To track the file uploading state
   bool _isUploading = false;
 
-  String baseUrl = 'http://192.168.8.108/flutterdemoapi/api.php';
+  String baseUrl = 'http://192.168.43.132/flutterdemoapi/api.php';
 
   void _getImage(BuildContext context, ImageSource source) async {
     File image = await ImagePicker.pickImage(source: source);
@@ -63,10 +72,17 @@ class _ImageInput extends State<ImageInput> {
     imageUploadRequest.fields['method'] = method;
     imageUploadRequest.files.add(file);
 
+    latitude= _position.latitude.toString();
+    longitude=  _position.longitude.toString();
+    datetime=  _position.timestamp.toLocal().toString();
+    
+
     try {
       final streamedResponse = await imageUploadRequest.send();
+      
 
       final response = await http.Response.fromStream(streamedResponse);
+      print(response);
 
       if (response.statusCode != 200) {
         return null;
@@ -94,8 +110,18 @@ class _ImageInput extends State<ImageInput> {
           Toast.show(response['error'], context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     } else {
+      print(response['vehicleNo']);
+      print(response['dateTime']);
+      print(response['latitude']);
+      print(response['longitude']);
+      print(response['response']);
       Toast.show(response['response'], context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      vehiclenumber= response['vehicleNo'];
+      isBlacklisted= response['response'];
+      var db = new DatabaseHelper();
+      var history = new History(vehiclenumber, datetime, latitude, longitude, isBlacklisted);
+      await db.saveHistory(history);
     }
   }
 
@@ -274,7 +300,7 @@ class _ImageInput extends State<ImageInput> {
               : Image.file(
                   _imageFile,
                   fit: BoxFit.cover,
-                  height: 500.0,
+                  height: 100.0,
                   alignment: Alignment.topCenter,
                   width: MediaQuery.of(context).size.width,
                 ),
