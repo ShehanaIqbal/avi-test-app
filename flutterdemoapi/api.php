@@ -26,11 +26,11 @@ if(isset($_FILES["image"]["name"])) {
                     if ($method==="blacklist"){
                         $result=$utility->BlackList_Vehicle($out,$latitude,$longitude,5,$dateTime,4);
                         if($result==="saved"){
-                            echo json_encode(['response' => "Vehicle Blacklisted Successfully"]);
+                            echo json_encode(['response' => "Vehicle Blacklisted Successfully",'vehicleNo'=>$out,'dateTime'=>$dateTime,'latitude'=>$latitude,'longitude'=>$longitude]);
                         }else if($result=== 'isBlacklisted'){
-                            echo json_encode(['response' => "Vehicle Is Already Blacklisted."]);
+                            echo json_encode(['response' => "Vehicle Is Already Blacklisted.",'vehicleNo'=>$out,'dateTime'=>$dateTime,'latitude'=>$latitude,'longitude'=>$longitude]);
                         }else if($result==='updated'){
-                            echo json_encode(['response' => "Vehicle Blacklisted Successfully"]);
+                            echo json_encode(['response' => "Vehicle Blacklisted Successfully",'vehicleNo'=>$out,'dateTime'=>$dateTime,'latitude'=>$latitude,'longitude'=>$longitude]);
                         }else{
                             echo json_encode(['error' => "Please Try Again"]);
                         }
