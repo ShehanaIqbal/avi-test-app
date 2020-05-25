@@ -1,16 +1,22 @@
+import 'package:avi_test_app/pages/newresetpassword.dart';
 import 'package:flutter/material.dart';
 import 'package:avi_test_app/pages/history_page.dart';
 import 'package:avi_test_app/pages/logger.dart';
 
 class DrawerUI extends StatelessWidget {
+  final String username;
+  final String userid;
+  final String branchid;
+
+  const DrawerUI({Key key, this.username, this.userid, this.branchid}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text("usename here"),
-            accountEmail: Text(""),
+            accountName: Text(username),
+            accountEmail: Text('Userid: '+userid+'  Branchid: '+branchid),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
                   ? Colors.blue
@@ -51,6 +57,12 @@ class DrawerUI extends StatelessWidget {
           ListTile(
             title: Text("Reset Password"),
             trailing: Icon(Icons.lock),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NewResetpass()),
+              );
+            },
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 5.0),

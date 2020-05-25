@@ -6,6 +6,7 @@ import './pages/splashScreen.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/logger.dart';
+import 'widgets/drawer.dart';
 
 
 
@@ -40,11 +41,13 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue
       ),
+     
       home: new SplashScreen(),
     
     routes: <String, WidgetBuilder>{
-      '/imagePicker': (BuildContext context) => new ImageInput()
+      '/imagePicker': (BuildContext context) => new Logger()
     },
+   
    
     );
   }

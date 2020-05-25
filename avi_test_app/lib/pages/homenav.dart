@@ -14,6 +14,7 @@ class Homenav extends StatefulWidget {
 }
 
 class _Homenav extends State<Homenav> {
+  var db = new DatabaseHelper();
   int data1;
   navigatelogger() {
     Navigator.push(
@@ -34,9 +35,13 @@ class _Homenav extends State<Homenav> {
     print(data == 1 ? "yes" : "no");
     if (data == 0) {
       data1 = 0;
+      print('no user');
+      navigatelogger();
     }
     if (data == 1) {
       data1 = 1;
+       print('user logged');
+       navigateimage();
     }
     print(data1);
     return data1;
@@ -44,22 +49,23 @@ class _Homenav extends State<Homenav> {
 
   @override
   Widget build(BuildContext context) {
-    int data1;
-    return new FutureBuilder(
-        future: checkValue(),
-        builder: (BuildContext context, AsyncSnapshot response) {
-          if (response.data == 1) {
-            data1 = 1;
-            print('user logged');
-            navigateimage();
-          }
-          if (response.data == 0) {
-            data1 = 1;
-            print('no user');
-            navigatelogger();
-          }
+   // int data1;
+    //return new FutureBuilder(
+        //future: checkValue(),
+       // builder: (BuildContext context, AsyncSnapshot response) {
+         // if (response.data == 1) {
+           // data1 = 1;
+           // print('user logged');
+           // navigateimage();
+          //}
+          //if (response.data == 0) {
+          //  data1 = 1;
+           // print('no user');
+          //  navigatelogger();
+         // }
           //response.data==0? new Logger(): new Scaffold();
-          return Scaffold();
-        });
+          //checkValue();
+         return Scaffold();
+        //});
   }
 }

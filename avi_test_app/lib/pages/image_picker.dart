@@ -1,5 +1,6 @@
 import 'package:avi_test_app/database/database.dart';
 import 'package:avi_test_app/database/history.dart';
+import 'package:avi_test_app/pages/logger.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -18,6 +19,10 @@ String datetime;
 String isBlacklisted;
 
 class ImageInput extends StatefulWidget {
+  final String userid;
+  final String username;
+  final String branchid;
+  ImageInput({Key key, this.userid, this.username, this.branchid}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _ImageInput();
@@ -274,7 +279,7 @@ class _ImageInput extends State<ImageInput> {
       appBar: AppBar(
         title: Text('Welcome to A V I '),
       ),
-      drawer: DrawerUI(),
+      drawer: DrawerUI(username: username,userid: userid,branchid: branchid),
       body: Column(
         children: <Widget>[
           Padding(

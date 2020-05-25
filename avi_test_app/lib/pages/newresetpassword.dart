@@ -11,36 +11,27 @@ import 'package:avi_test_app/database/user.dart';
 
 var db = new DatabaseHelper();
 
-class Resetpass extends StatefulWidget {
-  final String userid;
-  final String username;
-  final String branchid;
-  final String password;
-  Resetpass({
-    Key key,
-    this.userid,
-    this.username,
-    this.branchid,
-    this.password,
-  }) : super(key: key);
+class NewResetpass extends StatefulWidget {
   @override
   _ResetpassState createState() => _ResetpassState();
 }
 
-class _ResetpassState extends State<Resetpass> {
+class _ResetpassState extends State<NewResetpass> {
   TextEditingController pass1 = new TextEditingController();
   TextEditingController pass2 = new TextEditingController();
+  TextEditingController username = new TextEditingController();
+  TextEditingController cpass = new TextEditingController();
 
   String msg = '';
 
   Future<Map<String, dynamic>> _reset() async {
     final resetrequest = http.MultipartRequest(
-        'POST', Uri.parse("http://192.168.43.132/flutterdemoapi/reset.php"));
+        'POST', Uri.parse("http://192.168.43.132/flutterdemoapi/newreset.php"));
 
     resetrequest.fields['password1'] = pass1.text.toString();
     resetrequest.fields['password2'] = pass2.text.toString();
-    resetrequest.fields['userid'] = userid.toString();
-    resetrequest.fields['password'] = password.toString();
+    resetrequest.fields['username'] = username.text.toString();
+    resetrequest.fields['password'] = cpass.text.toString();
 
     try {
       final streamedResponse = await resetrequest.send();
@@ -71,19 +62,13 @@ class _ResetpassState extends State<Resetpass> {
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       msg = datauser['error'];
     } else {
-      print(datauser['response']);
       msg = datauser['response'];
       Toast.show(datauser['response'], context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
       Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (context) => ImageInput(
-                  userid: userid,
-                  username: username,
-                  branchid: branchid,
-                )),
+        MaterialPageRoute(builder: (context) => Logger()),
       );
     }
     setState(() {});
@@ -99,6 +84,24 @@ class _ResetpassState extends State<Resetpass> {
         child: Center(
           child: Column(
             children: <Widget>[
+              Text(
+                "Username",
+                style: TextStyle(fontSize: 18.0),
+              ),
+              TextField(
+                controller: username,
+                obscureText: false,
+                decoration: InputDecoration(hintText: 'Username'),
+              ),
+              Text(
+                "Current Password",
+                style: TextStyle(fontSize: 18.0),
+              ),
+              TextField(
+                controller: cpass,
+                obscureText: true,
+                decoration: InputDecoration(hintText: 'Current Password'),
+              ),
               Text(
                 "New Password",
                 style: TextStyle(fontSize: 18.0),

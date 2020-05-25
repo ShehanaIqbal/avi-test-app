@@ -8,7 +8,8 @@ import 'history.dart';
 import 'user.dart';
 
 class DatabaseHelper {
-  static final DatabaseHelper _instance = new DatabaseHelper.internal();
+  DatabaseHelper._privateConstructor();
+  static final DatabaseHelper _instance = new DatabaseHelper._privateConstructor();
   factory DatabaseHelper() => _instance;
   static Database _db;
 
@@ -18,7 +19,7 @@ class DatabaseHelper {
     return _db;
   }
 
-  DatabaseHelper.internal();
+  //DatabaseHelper.internal();
 
   initDb() async {
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
@@ -102,12 +103,12 @@ class DatabaseHelper {
     //print(latestuser.length);
   }
   Future<int> checkuser() async{
-    var dbClient = await db;
+    Database dbClient = await _instance.db;
     List<Map> checklist = await dbClient.rawQuery('SELECT COUNT(username) FROM User') ;
     int checker = checklist[0]['COUNT(username)'];
     //print(checker);
-    //return checker;
-    return Future.delayed(Duration(seconds: 2), ()=>checker);
+    return checker;
+    //return Future.delayed(Duration(seconds: 2), ()=>checker);
   }
 
   Future<int> deleteUser() async {

@@ -12,8 +12,9 @@ import 'package:avi_test_app/database/user.dart';
 String username;
 String userid;
 String branchid;
+String isReset;
+String password;
 var db = new DatabaseHelper();
-
 
 class Logger extends StatefulWidget {
   @override
@@ -28,12 +29,12 @@ class _LoggerState extends State<Logger> {
   String msg = '';
 
   Future<Map<String, dynamic>> _login() async {
-   
     final loginrequest = http.MultipartRequest(
         'POST', Uri.parse("http://192.168.43.132/flutterdemoapi/login.php"));
 
     loginrequest.fields['username'] = user.text.toString();
     loginrequest.fields['password'] = pass.text.toString();
+    password = pass.text.toString();
 
     try {
       final streamedResponse = await loginrequest.send();
@@ -68,22 +69,38 @@ class _LoggerState extends State<Logger> {
       branchid = (datauser['branchID']);
       userid = (datauser['userID']);
       username = (datauser['username']);
+      isReset = (datauser['isReset']);
 
       var user = new User(username, userid, branchid);
       await db.saveUser(user);
 
-      print(datauser['response']);
       msg = datauser['response'];
       Toast.show(datauser['response'], context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
-      //var db = new DatabaseHelper();
-      //var user = new User(vehiclenumber, datetime, latitude, longitude, isBlacklisted);
-      //await db.saveHistory(history);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Resetpass(userid: userid,username: username,branchid: branchid,)),
-      );
+      print(isReset);
+      if (isReset == '0') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Resetpass(
+                  userid: userid,
+                  username: username,
+                  branchid: branchid,
+                  password: password)),
+        );
+      }
+      if (isReset == '1') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ImageInput(
+                    userid: userid,
+                    username: username,
+                    branchid: branchid,
+                  )),
+        );
+      }
     }
     setState(() {
       uname = datauser['username'];
